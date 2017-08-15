@@ -1,7 +1,7 @@
 // spec.js
 'use strict';
 
-  var CalculatorPage = require('../ProtractorTutorial/CalculatorPage.js');
+  var CalculatorPage = require('../ProtractorFW/CalculatorPage.js');
 
 describe('Calculator Page', function () {
     var page;
@@ -11,7 +11,23 @@ describe('Calculator Page', function () {
     page = new CalculatorPage();
   });
 
-  it('should have a history and the added number should display correctly.', function() {
+  it('History should be added to the table as the calculations are run', function() {
+    
+    page.add(1, 2);
+
+    expect(page.history.count()).toEqual(1);
+
+    page.add(3, 4);
+    
+    expect(page.history.count()).toEqual(2);
+
+    page.add(5, 6);
+
+    expect(page.history.count()).toEqual(3); 
+
+  });
+
+  it('The add number result should display correctly.', function() {
     page.add(1, 2);
 
     expect(page.result.getText()).toEqual('3');
@@ -20,8 +36,6 @@ describe('Calculator Page', function () {
       console.log(text);
     });
 
-    expect(page.history.count()).toEqual(1);
-
     page.add(3, 4);
 
     expect(page.result.getText()).toEqual('7');
@@ -29,8 +43,6 @@ describe('Calculator Page', function () {
     page.result.getText().then(function(text) {
       console.log(text);
     });
-    
-    expect(page.history.count()).toEqual(2);
 
     page.add(5, 6);
 
@@ -40,7 +52,6 @@ describe('Calculator Page', function () {
       console.log(text);
     });
 
-    expect(page.history.count()).toEqual(3); 
   });
 
 });
